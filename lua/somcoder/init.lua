@@ -5,3 +5,4 @@ require('somcoder.set')
 require('lualine').setup {
     options = { theme = 'onedark' }
 }
+
