@@ -26,7 +26,10 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 --cmp_mappings['<S-Tab>'] = nil
 
 lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
+  mapping = cmp_mappings,
+  window = {
+    documentation = cmp.config.window.bordered()
+  },
 })
 
 lsp.set_preferences({
@@ -59,8 +62,24 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-f>", function() vim.lsp.buf.format() end, opts)
 end)
 
+
 lsp.setup()
 
 vim.diagnostic.config({
-    virtual_text = true
+  virtual_text = true,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'always',
+  },
 })
+
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {border = 'rounded'}
+)
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {border = 'rounded'}
+)
